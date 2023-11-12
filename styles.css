@@ -79,6 +79,12 @@ select:focus {
     background-color: #afafaf;
 }
 
+
+.form-check-input:checked {
+    background-color: var(--theme-color-primary);
+    border-color: var(--theme-color-primary);
+}
+
 .search-bar-container {
     width: 100%;
     display: flex;
@@ -87,6 +93,10 @@ select:focus {
     background-color: #dedede;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
+}
+
+.playButton {
+    display: none;
 }
 
 .search-bar {
