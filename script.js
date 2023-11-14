@@ -2,17 +2,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
     const searchBtn = document.querySelector(".search-btn");
     const searchBar = document.querySelector(".search-bar");
-
     const wordNameTitle = document.querySelector(".word-name-title");
     const phoneticElement = document.querySelector(".phonetic");
     const playButton = document.querySelector(".heading button");
-
     const contentSegmentContainer = document.querySelector(".content-segment-container");
+    const themeSwitcher = document.querySelector("#themeSwitcher");
+    const body = document.querySelector("body");
+    const fontFamilySelect = document.getElementById("font-family-select");
+    const fontFamilySelectContainer = document.querySelector(".dropdown-container");
+
+
+    fontFamilySelect.addEventListener("change", (event) => {
+        const selectedValue = event.target.value;
+        if (selectedValue === "Serif") {
+            document.documentElement.style.setProperty('--font-family', "serif");
+            fontFamilySelectContainer.style.width = "70px";
+        }
+        else if (selectedValue === "Sans Serif") {
+            document.documentElement.style.setProperty('--font-family', "sans-serif");
+            fontFamilySelectContainer.style.width = "120px";
+        } else {
+            document.documentElement.style.setProperty('--font-family', selectedValue);
+            fontFamilySelectContainer.style.width = "120px";
+        }
+    });
 
     let wordData;
 
+    themeSwitcher.addEventListener("change", () => {
+        if (themeSwitcher.checked) {
+            body.classList.add("dark");
+        } else {
+            body.classList.remove("dark");
+        }
+    })
+
     const searchWord = () => {
         const word = searchBar.value;
+
+        // const word = "keyboard"
 
         axios.get(`${API_URL}${word}`)
             .then((res) => {
@@ -43,12 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 contentSegmentContainer.innerHTML = "";
 
                 // Create a div for each partOfSpeech
-                wordData.meanings.forEach((meaning) => {
+                wordData.meanings.forEach((meaning, index) => {
                     const contentSegment = document.createElement("div");
-                    contentSegment.classList.add("section1", "content-segment-container");
+                    contentSegment.classList.add("content-segment-container");
 
                     const sectionHeading = document.createElement("div");
                     sectionHeading.classList.add("section-heading");
+
 
                     const partOfSpeechTitle = document.createElement("h2");
                     partOfSpeechTitle.classList.add("section-title");
@@ -72,13 +101,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     meaning.definitions.forEach((definition) => {
                         const li = document.createElement("li");
-                        li.textContent = definition.definition;
+                        li.innerHTML = `${definition.definition}`;
 
                         if (definition.example) {
                             const exampleElement = document.createElement("p");
                             exampleElement.classList.add("example");
-                            exampleElement.textContent = `Example: ${definition.example}`;
+                            exampleElement.textContent = `"${definition.example}"`;
                             li.appendChild(exampleElement);
+                        }
+
+                        if (definition.synonyms && definition.synonyms.length > 0) {
+                            const synonymsElement = document.createElement("p");
+                            synonymsElement.classList.add("synonyms");
+                            synonymsElement.textContent = `Synonyms: ${definition.synonyms.join(", ")}`;
+                            li.appendChild(synonymsElement);
                         }
 
                         meaningList.appendChild(li);
@@ -88,8 +124,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     sectionContent.appendChild(meaningList);
                     contentSegment.appendChild(sectionContent);
 
+                    if (meaning.synonyms && meaning.synonyms.length > 0) {
+                        const synonymsElement = document.createElement("p");
+                        synonymsElement.classList.add("synonyms");
+                        synonymsElement.innerHTML = `Synonyms <span class="synonym-value">${meaning.synonyms.join("</span>, <span class='synonym-value'>")}</span>`;
+                        contentSegment.appendChild(synonymsElement);
+                    }
+
                     contentSegmentContainer.appendChild(contentSegment);
                 });
+
+                const bottomDivider = document.createElement("div");
+                bottomDivider.classList.add("bottom-divider");
+                contentSegmentContainer.appendChild(bottomDivider);
+
+                const sourceElement = document.createElement("div");
+                sourceElement.classList.add("source");
+                sourceElement.innerHTML = `Source <a href="${wordData.sourceUrls[0]}" target="_blank">${wordData.sourceUrls[0]}</a>
+                <a href="${wordData.sourceUrls[0]}" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>`;
+                contentSegmentContainer.appendChild(sourceElement);
             })
             .catch((e) => {
                 console.error(e);
@@ -114,4 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     searchBtn.addEventListener("click", searchWord);
+    searchBar.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            searchWord();
+        }
+    });
 });

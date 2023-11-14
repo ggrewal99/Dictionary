@@ -7,17 +7,26 @@
 :root {
     --body-bg-color: #fff;
     --font-color-primary: #222222;
+    --font-color-secondary: #afafaf;
     --font-family: serif;
+    --searchbar-bg-color: #dedede;
     --theme-color-primary: #7b32a8;
-    --theme-color-secondary: #7b32a85e;
+    --theme-color-secondary: #7b32a83f;
+}
+
+.dark {
+    --body-bg-color: #222222;
+    --font-color-primary: #ffffffd3;
+    --font-color-secondary: #6e6e6e;
+    --searchbar-bg-color: #707070;
 }
 
 body {
     min-height: 100vh;
-    margin: 0 8rem;
+    margin: 0 16rem;
     background-color: var(--body-bg-color);
     color: var(--font-color-primary) !important;
-    font-family: var(--font-family);
+    font-family: var(--font-family) !important;
 }
 
 nav {
@@ -37,6 +46,7 @@ select {
     width: max-content;
     font-size: 1.2rem;
     position: relative;
+    background-color: var(--body-bg-color) !important;
 }
 
 select:focus {
@@ -44,7 +54,7 @@ select:focus {
     outline: none;
 }
 .dropdown-container {
-    width: 110px;
+    width: 70px;
     overflow: hidden;
     position: relative;
 }
@@ -53,15 +63,15 @@ select:focus {
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 6px solid var(--theme-color-primary);
+    border-top: 6px solid var(--theme-color-primary) !important;
     position: absolute;
     top: 40%;
     right: 5px;
     content: "";
-    z-index: 98;
+    z-index: 100;
 }
 .dropdown-container select {
-    width: 220px;
+    width: 150px;
     border: 0;
     position: relative;
     z-index: 99;
@@ -90,9 +100,9 @@ select:focus {
     display: flex;
     justify-content: space-between;
     align-self: center;
-    background-color: #dedede;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
+    background-color: var(--searchbar-bg-color) !important;
 }
 
 .playButton {
@@ -106,7 +116,8 @@ select:focus {
     font-style: bold !important;
     font-size: 1.4rem;
     font-weight: 900;
-    color: var(--font-color-primary);
+    color: var(--font-color-primary) !important;
+    caret-color: (var(--font-color-primary));
 }
 
 .search-bar:focus {
@@ -149,4 +160,70 @@ select:focus {
 .heading button i {
     color: var(--theme-color-primary);
     transform: translateX(10%);
+}
+
+.content-segment-container {
+    margin: 2rem 0 3rem 0;
+}
+
+.section-title {
+    font-style: italic;
+    font-size: 1.8rem;
+    font-weight: 600;
+    width: min-content;
+    white-space: nowrap;
+}
+
+.example, .section-subheading, .synonyms {
+    color: #737373;
+}
+
+.section-subheading, .synonyms {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+}
+
+.synonym-value {
+    font-weight: 600;
+    color: var(--theme-color-primary);
+}
+
+.content-segment-container ul li {
+    font-size: 1.3rem;
+    color: var(--font-color-primary) !important;
+}
+
+li::marker {
+    color: var(--theme-color-primary);
+}
+
+.content-segment-container ul li span {
+    color: var(--font-color-primary);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    white-space: nowrap;
+}
+
+.section-divider, .bottom-divider {
+    background-color: var(--font-color-secondary);
+    height: 1px;
+    width: 100%;
+}
+
+
+.source a:first-child {
+    margin-left: 1rem;
+    font-family: var(--font-family);
+    color: var(--font-color-primary);
+}
+
+.source a i{
+    color: var(--font-color-primary);
+    transform: translateY(-0.8%) scale(0.8);
+    
 }
