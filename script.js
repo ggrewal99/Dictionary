@@ -11,20 +11,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const fontFamilySelect = document.getElementById("font-family-select");
     const fontFamilySelectContainer = document.querySelector(".dropdown-container");
 
+    const getWidth = (selectedValue) => {
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 401 && screenWidth <= 1100) {
+            if (selectedValue === "Serif") {
+                document.documentElement.style.setProperty('--font-family', "serif");
+                fontFamilySelectContainer.style.width = "3.5rem";
+            }
+            else if (selectedValue === "Sans Serif") {
+                document.documentElement.style.setProperty('--font-family', "sans-serif");
+                fontFamilySelectContainer.style.width = "6rem";
+            } else {
+                document.documentElement.style.setProperty('--font-family', selectedValue);
+                fontFamilySelectContainer.style.width = "6.3rem";
+            }
+        } else if (window.matchMedia('(max-width: 400px)').matches) {
+            if (selectedValue === "Serif") {
+                document.documentElement.style.setProperty('--font-family', "serif");
+                fontFamilySelectContainer.style.paddingRight = "6rem";
+            }
+            else if (selectedValue === "Sans Serif") {
+                document.documentElement.style.setProperty('--font-family', "sans-serif");
+                fontFamilySelectContainer.style.paddingRight = "7.5rem";
+            } else {
+                document.documentElement.style.setProperty('--font-family', selectedValue);
+                fontFamilySelectContainer.style.paddingRight = "8.5rem";
+            }
+        } else {
+            fontFamilySelectContainer.style.paddingRight = "0";
+        }
+    }
 
     fontFamilySelect.addEventListener("change", (event) => {
         const selectedValue = event.target.value;
-        if (selectedValue === "Serif") {
-            document.documentElement.style.setProperty('--font-family', "serif");
-            fontFamilySelectContainer.style.width = "70px";
-        }
-        else if (selectedValue === "Sans Serif") {
-            document.documentElement.style.setProperty('--font-family', "sans-serif");
-            fontFamilySelectContainer.style.width = "120px";
-        } else {
-            document.documentElement.style.setProperty('--font-family', selectedValue);
-            fontFamilySelectContainer.style.width = "120px";
-        }
+        getWidth(selectedValue);
     });
 
     let wordData;
@@ -140,8 +160,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const sourceElement = document.createElement("div");
                 sourceElement.classList.add("source");
-                sourceElement.innerHTML = `Source <a href="${wordData.sourceUrls[0]}" target="_blank">${wordData.sourceUrls[0]}</a>
-                <a href="${wordData.sourceUrls[0]}" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>`;
+                sourceElement.innerHTML = `<span>Source</span> <div><a href="${wordData.sourceUrls[0]}" target="_blank">${wordData.sourceUrls[0]}</a>
+                <a href="${wordData.sourceUrls[0]}" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>`;
                 contentSegmentContainer.appendChild(sourceElement);
             })
             .catch((e) => {

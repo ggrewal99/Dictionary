@@ -12,6 +12,7 @@
     --searchbar-bg-color: #dedede;
     --theme-color-primary: #7b32a8;
     --theme-color-secondary: #7b32a83f;
+    --placeholder-color: grey;
 }
 
 .dark {
@@ -19,6 +20,11 @@
     --font-color-primary: #ffffffd3;
     --font-color-secondary: #6e6e6e;
     --searchbar-bg-color: #707070;
+    --placeholder-color: rgb(188, 188, 188);
+}
+
+::placeholder {
+    color: var(--placeholder-color) !important;
 }
 
 body {
@@ -33,6 +39,7 @@ nav {
     padding: 2rem 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 
@@ -44,6 +51,7 @@ input {
 select {
     border: none;
     width: max-content;
+    height: 100%;
     font-size: 1.2rem;
     position: relative;
     background-color: var(--body-bg-color) !important;
@@ -54,7 +62,7 @@ select:focus {
     outline: none;
 }
 .dropdown-container {
-    width: 70px;
+    width: 4.4rem;
     overflow: hidden;
     position: relative;
 }
@@ -66,7 +74,7 @@ select:focus {
     border-top: 6px solid var(--theme-color-primary) !important;
     position: absolute;
     top: 40%;
-    right: 5px;
+    right: 0.3rem;
     content: "";
     z-index: 100;
 }
@@ -94,6 +102,7 @@ select:focus {
     background-color: var(--theme-color-primary);
     border-color: var(--theme-color-primary);
 }
+
 
 .search-bar-container {
     width: 100%;
@@ -136,6 +145,16 @@ select:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.word-name {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.word-name-title{
+    word-wrap: break-word;
 }
 
 .heading h1 {
@@ -215,15 +234,23 @@ li::marker {
     width: 100%;
 }
 
+.source {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-.source a:first-child {
+.source a i{
+    color: var(--font-color-primary) !important;
+    transform: translate(-30%, 5%) scale(0.8); 
+}
+
+.source a {
     margin-left: 1rem;
     font-family: var(--font-family);
     color: var(--font-color-primary);
 }
 
-.source a i{
-    color: var(--font-color-primary);
-    transform: translateY(-0.8%) scale(0.8);
-    
+.source div {
+    display: flex;
+    gap: 0;
 }
