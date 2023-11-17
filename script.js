@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const body = document.querySelector("body");
     const fontFamilySelect = document.getElementById("font-family-select");
     const fontFamilySelectContainer = document.querySelector(".dropdown-container");
+    let content = document.querySelector(".content");
 
     const getWidth = (selectedValue) => {
         const screenWidth = window.innerWidth;
@@ -39,6 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } else {
             fontFamilySelectContainer.style.paddingRight = "0";
+            if (selectedValue === "Serif") {
+                document.documentElement.style.setProperty('--font-family', "serif");
+                fontFamilySelectContainer.style.width = "4.5rem";
+            }
+            else if (selectedValue === "Sans Serif") {
+                document.documentElement.style.setProperty('--font-family', "sans-serif");
+                fontFamilySelectContainer.style.width = "7.5rem";
+            } else {
+                document.documentElement.style.setProperty('--font-family', selectedValue);
+                fontFamilySelectContainer.style.width = "7.5rem";
+            }
         }
     }
 
@@ -59,11 +71,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const searchWord = () => {
         const word = searchBar.value;
+        const spinner = document.querySelector(".spinner-container");
+        const welcomeMsg = document.querySelector(".welcome-section");
+        const notFoundMsg = document.querySelector(".notFound-section");
 
-        // const word = "keyboard"
+        wordNameTitle.textContent = "";
+        phoneticElement.textContent = "";
+        playButton.style.display = "none";
+        content.innerHTML = "<div class='section1 content-segment-container'></div>";
+
+        spinner.classList.remove("d-none");
+
+        welcomeMsg.style.display = "none";
+        notFoundMsg.style.display = "none";
 
         axios.get(`${API_URL}${word}`)
             .then((res) => {
+                spinner.classList.add("d-none");
                 wordData = res.data[0];
                 wordNameTitle.textContent = wordData.word;
 
@@ -91,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 contentSegmentContainer.innerHTML = "";
 
                 // Create a div for each partOfSpeech
-                wordData.meanings.forEach((meaning, index) => {
+                wordData.meanings.forEach((meaning) => {
                     const contentSegment = document.createElement("div");
                     contentSegment.classList.add("content-segment-container");
 
@@ -152,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
                     contentSegmentContainer.appendChild(contentSegment);
+                    content.appendChild(contentSegmentContainer);
                 });
 
                 const bottomDivider = document.createElement("div");
@@ -165,7 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 contentSegmentContainer.appendChild(sourceElement);
             })
             .catch((e) => {
+                spinner.classList.add("d-none");
                 console.error(e);
+                notFoundMsg.style.display = "flex";
             });
     }
 

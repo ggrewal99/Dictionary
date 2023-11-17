@@ -50,4 +50,8 @@
     .heading h2 {
         font-size: 1.4rem;
     }
+
+    .notFound-section h2 {
+        font-size: 1.2rem;
+    }
 }
