@@ -219,7 +219,6 @@ select:focus {
     font-style: italic;
     font-weight: 500;
     font-size: 1.5rem;
-    width: max-content;
     text-align: center;
 }
 
