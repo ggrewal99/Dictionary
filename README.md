@@ -6,13 +6,6 @@ A dictionary web app that allows users to search for word definitions. The proje
 
 This project was inspired by the design provided by [Frontend Mentor](https://www.frontendmentor.io/).
 
-## Table of Contents
-
-- [Features](#features)
-- [Usage](#usage)
-- [Technologies](#technologies)
-- [Demo](#demo)
-
 ## Features
 
 - Search for word definitions
