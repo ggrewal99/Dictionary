@@ -2,7 +2,7 @@
 
 ## Description
 
-A simple dictionary web application that allows users to search for word definitions. The project uses the [DictionaryAPI](https://dictionaryapi.dev/) to fetch word data and provides features like changing font family, dark mode toggle, and playing pronunciation audio.
+A dictionary web app that allows users to search for word definitions. The project uses the [DictionaryAPI](https://dictionaryapi.dev/) to fetch word data and provides features like changing font family, dark mode toggle, and playing pronunciation audio.
 
 This project was inspired by the design provided by [Frontend Mentor](https://www.frontendmentor.io/).
 
