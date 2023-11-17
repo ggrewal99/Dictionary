@@ -289,9 +289,12 @@ li::marker {
     margin-left: 1rem;
     font-family: var(--font-family);
     color: var(--font-color-primary);
+    height: auto;
+    word-break: break-all;
 }
 
 .source div {
     display: flex;
+    flex-wrap: wrap;
     gap: 0;
 }
